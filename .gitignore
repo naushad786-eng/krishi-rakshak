@@ -1,0 +1,17 @@
+# React / Node
+frontend/node_modules/
+frontend/dist/
+.env
+
+# Python / FastAPI
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# Database (We ignore the DB so we don't cause version conflicts)
+backend/krishi_rakshak.db
+backend/*.sqlite3
+
+# OS Files
+.DS_Store
+Thumbs.db
