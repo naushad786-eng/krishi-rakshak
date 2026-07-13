@@ -52,7 +52,7 @@ export default function Auth({ onSuccessfulAuth }) {
       }}
     >
       {/* DEEP GREEN/BLACK OVERLAY TO UNIFY THE PAGE */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-950/90 via-green-900/80 to-black/70"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-green-950/90 via-green-900/80 to-black/70"></div>
       
       {/* MAIN CONTENT CONTAINER */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-12 py-12">
