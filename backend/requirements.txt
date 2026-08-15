@@ -4,3 +4,6 @@ tensorflow-cpu
 pillow
 python-multipart
 numpy
+PyJWT
+SQLAlchemy
+passlib[bcrypt]
