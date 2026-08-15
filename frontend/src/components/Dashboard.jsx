@@ -170,7 +170,7 @@ export default function Dashboard({ onLogout }) {
                   <div className="w-16 h-16 mb-3 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl font-bold">📷</div>
                   <p className="font-semibold text-gray-700">{uiText[lang]?.upload}</p>
                 </div>
-                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
+                <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
               </label>
             )}
           </div>
