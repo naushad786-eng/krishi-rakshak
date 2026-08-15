@@ -17,9 +17,9 @@ export default function Dashboard({ onLogout }) {
   const recognitionRef = useRef(null);
 
   const uiText = {
-    en: { title: "Crop Diagnostics", upload: "Upload leaf photo", btn: "Run AI Diagnosis", notes: "Any observations about the plant?", mic: "Speak", stopMic: "Listening...", speak: "Read Aloud", stopSpeak: "Stop Audio" },
-    hi: { title: "फसल निदान", upload: "पत्ती की फोटो अपलोड करें", btn: "एआई विश्लेषण चलाएं", notes: "पौधे के बारे में कोई जानकारी?", mic: "बोलें", stopMic: "सुन रहा हूँ...", speak: "जोर से पढ़ें", stopSpeak: "ऑडियो रोकें" },
-    ta: { title: "பயிர் கண்டறிதல்", upload: "இலை புகைப்படத்தை பதிவேற்றவும்", btn: "பகுப்பாய்வு செய்", notes: "தாவரத்தைப் பற்றிய தகவல்கள்?", mic: "பேசு", stopMic: "கேட்கிறது...", speak: "படியுங்கள்", stopSpeak: "நிறுத்து" }
+    en: { title: "Crop Diagnostics", upload: "Upload leaf photo", btn: "Run AI Diagnosis", notes: "Any observations about the plant?", mic: "Speak", stopMic: "Listening...", speak: "Read Aloud", stopSpeak: "Stop Audio", camera: "Camera", gallery: "Gallery" },
+    hi: { title: "फसल निदान", upload: "पत्ती की फोटो अपलोड करें", btn: "एआई विश्लेषण चलाएं", notes: "पौधे के बारे में कोई जानकारी?", mic: "बोलें", stopMic: "सुन रहा हूँ...", speak: "जोर से पढ़ें", stopSpeak: "ऑडियो रोकें", camera: "कैमरा", gallery: "गैलरी" },
+    ta: { title: "பயிர் கண்டறிதல்", upload: "இலை புகைப்படத்தை பதிவேற்றவும்", btn: "பகுப்பாய்வு செய்", notes: "தாவரத்தைப் பற்றிய தகவல்கள்?", mic: "பேசு", stopMic: "கேட்கிறது...", speak: "படியுங்கள்", stopSpeak: "நிறுத்து", camera: "கேமரா", gallery: "கேலரி" }
   };
 
   // Safely clean up audio if the user navigates away
@@ -165,13 +165,25 @@ export default function Dashboard({ onLogout }) {
                 <button onClick={() => { setSelectedFile(null); setPreviewUrl(null); setResult(null); }} className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full text-xs">✕ Clear</button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-green-400 rounded-2xl cursor-pointer bg-green-50/50">
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 mb-3 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl font-bold">📷</div>
-                  <p className="font-semibold text-gray-700">{uiText[lang]?.upload}</p>
+              <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-green-400 rounded-2xl bg-green-50/50">
+                <div className="w-16 h-16 mb-3 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl font-bold">📷</div>
+                <p className="font-semibold text-gray-700 mb-4">{uiText[lang]?.upload}</p>
+                
+                {/* THE TWO NEW BUTTONS */}
+                <div className="flex gap-4">
+                  {/* Button 1: Forces the Camera */}
+                  <label className="cursor-pointer bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md text-sm font-bold transition duration-200">
+                    📸 {uiText[lang]?.camera}
+                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
+                  </label>
+
+                  {/* Button 2: Opens the Gallery */}
+                  <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md text-sm font-bold transition duration-200">
+                    🖼️ {uiText[lang]?.gallery}
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                  </label>
                 </div>
-                <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-              </label>
+              </div>
             )}
           </div>
 
