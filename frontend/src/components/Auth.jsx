@@ -20,7 +20,7 @@ export default function Auth({ onSuccessfulAuth }) {
 
     try {
       if (isLogin) {
-        const response = await axios.post('http://127.0.0.1:8000/login', {
+        const response = await axios.post('https://krishi-rakshak-r6hs.onrender.com/login', {
           email: email,
           password: password
         });
@@ -28,7 +28,7 @@ export default function Auth({ onSuccessfulAuth }) {
            onSuccessfulAuth(); 
         }
       } else {
-        const response = await axios.post('http://127.0.0.1:8000/register', {
+        const response = await axios.post('https://krishi-rakshak-r6hs.onrender.com/register', {
           name: name,
           email: email,
           password: password
