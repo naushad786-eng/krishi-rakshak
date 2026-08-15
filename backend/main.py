@@ -128,7 +128,17 @@ def login_user(user_credentials: schemas.UserLogin, db: Session = Depends(get_db
 
 print("Loading Krishi-Rakshak AI Brain...")
 MODEL_PATH = "krishi_rakshak_model.h5"
-disease_model = tf.keras.models.load_model(MODEL_PATH)
+
+# --- THE BULLETPROOF AI PATCH ---
+# Colab sometimes sneaks a 'quantization_config' into the Dense layer when saving,
+# but the cloud server crashes when reading it. This safely ignores that bug!
+class SafeDense(tf.keras.layers.Dense):
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('quantization_config', None)
+        super().__init__(*args, **kwargs)
+
+# Load the model using our patch
+disease_model = tf.keras.models.load_model(MODEL_PATH, custom_objects={'Dense': SafeDense})
 print("✅ AI Brain Loaded Successfully!")
 
 # 2. ENRICHED MULTILINGUAL DICTIONARY (FULLY POPULATED)
