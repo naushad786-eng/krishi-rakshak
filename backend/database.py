@@ -1,22 +1,28 @@
+import os
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-# Create a local SQLite database file named 'krishi_rakshak.db'
-SQLALCHEMY_DATABASE_URL = "sqlite:///./krishi_rakshak.db"
+# 1. Look for the Cloud URL from Render. If not found, fall back to local SQLite.
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database.db")
 
-# Connect to the database
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+# 2. Render provides URLs starting with "postgres://", but modern SQLAlchemy 
+# requires "postgresql://". This automatically fixes that bug!
+if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
+    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# Create a session to talk to the database
+# 3. Create the engine. SQLite requires a special argument that PostgreSQL does not.
+if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
+    engine = create_engine(
+        SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    )
+else:
+    # This runs when connected to the live Render PostgreSQL database!
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# This is the base class we will use to create our database tables
 Base = declarative_base()
 
-# Dependency function to get the database session in our API routes
 def get_db():
     db = SessionLocal()
     try:
